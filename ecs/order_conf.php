@@ -4,7 +4,7 @@ include('vendor/includesv/productclass.php');
 $e = new Product();
 $cust=$e->p_id=$_SESSION['p_id'];
 $orderd=$e->readByIdord($cust);
-print_r($_SESSION);
+
 
 ?>
 

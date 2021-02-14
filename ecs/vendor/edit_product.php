@@ -4,7 +4,8 @@
    
    $x       = new Product();
    $id      =$_GET['id'];
-   
+   $data=$x->readById($id);
+    $productSet=$data[0];
 
     if(isset($_POST['submit'])){
       
@@ -13,7 +14,16 @@
     $x->pro_name     = $_POST['pro_name'];
     $x->pro_desc     = $_POST['pro_desc'];
     $x->pro_price    = $_POST['pro_price'];
-    $x->pro_image    = $_POST['pro_image'];
+    
+    if ($_FILES['pro_image']['name']){
+        $x->pro_image      = $_FILES['pro_image']['name'];
+        }
+        else{
+        $x->pro_image      = $productSet['pro_image'];}
+        $tmp_name      =$_FILES['pro_image']['tmp_name'];
+        $path          ='img/pro/';
+
+        move_uploaded_file($tmp_name,$path.$x->pro_image);
     $x->cat_id       = $_POST['cat_id'];
     $x->av_id        = $_POST['av_id'];
     $x->pro_qty      = $_POST['pro_qty'];
@@ -27,8 +37,7 @@
     }
 }
 
-    $data=$x->readById($id);
-    $productSet=$data[0];
+    
  ?>
 
 <?php include("includesv/home_header.php");?>
@@ -51,7 +60,7 @@
     </div>
     <div class="form-group">
         <label for="example-email-input" class="form-control-label">Products Image <?php
-                             echo "<img src='img/cat/{$productSet['pro_image']}' width='100' height='100'>";
+                             echo "<img src='img/pro/{$productSet['pro_image']}' width='100' height='100'>";
                              ?></label>
     </div>
     <div class="form-group">
